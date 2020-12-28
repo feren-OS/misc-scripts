@@ -11,6 +11,11 @@ if [ ! -d $1 ]; then
 fi
 
 cd "$1"
+if ! grep -q 'focal' ./etc/apt/sources.list; then
+    echo "This install of Feren OS is not compatible with this script. Aborting now."
+    exit 1
+fi
+
 sudo rm -rf plasmafixdebs /plasmafixdebs
 sudo mkdir plasmafixdebs
 sudo ln -sf $(pwd)/plasmafixdebs /plasmafixdebs
@@ -26,6 +31,7 @@ fi
 for i in /dev /dev/pts /proc /sys; do sudo mount -B $i "$1$i"; done
 sudo mount /dev/sdb1 "$1/boot/efi"
 
+sudo chroot "$1" apt update
 sudo chroot "$1" dpkg --purge --force-all feren-patched-kcmlookandfeel
 sudo chroot "$1" dpkg -i /plasmafixdebs/*.deb
 sudo chroot "$1" dpkg --configure -a
