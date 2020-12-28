@@ -1,14 +1,20 @@
 #!/bin/bash
 
+if [ ! -d $1 ]; then
+    echo "We couldn't find the mounted Feren OS partition in the directory you supplied this command. Aborting now."
+    exit 1
+fi
+
 cd "$1"
 sudo rm -rf plasmafixdebs /plasmafixdebs
 sudo mkdir plasmafixdebs
 sudo ln -sf $(pwd)/plasmafixdebs /plasmafixdebs
 sudo apt update
+cd plasmafixdebs
 sudo apt download libqt5core5a plasma-workspace
 
 if [ ! $? -eq 0 ]; then
-    echo "Unable to download required packages. Make sure you're connected to the internet."
+    echo "Unable to download required packages. Make sure you're connected to the internet. Aborting now."
     exit 1
 fi
 
