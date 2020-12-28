@@ -38,8 +38,10 @@ sudo chroot "$1" dpkg --configure -a
 sudo chroot "$1" apt-get -f install -y
 sudo chroot "$1" apt-get install feren-plasma-desktop-full -y
 
+cd "$1"
 for i in /dev/pts /dev /proc /sys /boot/efi; do sudo umount "$1$i" ; done
 
+cd "$1"
 sudo rm -rf plasmafixdebs /plasmafixdebs
 
 echo "Done. The issue should hopefully now be fixed."
