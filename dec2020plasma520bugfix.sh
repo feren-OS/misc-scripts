@@ -23,6 +23,15 @@ sudo mount /dev/sdb1 "$1/boot/efi"
 
 sudo chroot "$1" dpkg --purge --force-all feren-patched-kcmlookandfeel
 sudo chroot "$1" dpkg -i /plasmafixdebs/*.deb
+sudo chroot "$1" dpkg --configure -a
+sudo chroot "$1" apt-get -f install -y
+sudo chroot "$1" apt-get dist-upgrade -y
+sudo chroot "$1" dpkg --configure -a
+sudo chroot "$1" apt-get -f install -y
+sudo chroot "$1" apt-get dist-upgrade -y
+sudo chroot "$1" dpkg --configure -a
+sudo chroot "$1" apt-get -f install -y
+sudo chroot "$1" apt-get install feren-plasma-desktop-full -y
 
 for i in /dev/pts /dev /proc /sys /boot/efi; do sudo umount "$1$i" ; done
 
