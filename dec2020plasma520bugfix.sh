@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if ! grep -q 'focal' /etc/apt/sources.list; then
+    echo "This ISO is not compatible with this script. Make sure you have the November 2020 Snapshor or later ISO. Aborting now."
+    exit 1
+fi
+
 if [ ! -d $1 ]; then
     echo "We couldn't find the mounted Feren OS partition in the directory you supplied this command. Aborting now."
     exit 1
